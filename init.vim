@@ -21,7 +21,7 @@ Plug 'hrsh7th/vim-vsnip'
 
 Plug 'neovim/nvim-lspconfig' 
 
-Plug 'Mofiqul/dracula.nvim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'NLKNguyen/papercolor-theme'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
