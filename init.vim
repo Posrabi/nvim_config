@@ -42,6 +42,8 @@ call plug#end()
 "   syntax off            " Disable syntax highlighting
 
 colorscheme dracula
+highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+set cursorline
 
 lua require("lsp_config")
 lua require("treesitter")
