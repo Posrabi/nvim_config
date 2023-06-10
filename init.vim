@@ -21,8 +21,8 @@ Plug 'hrsh7th/vim-vsnip'
 
 Plug 'neovim/nvim-lspconfig' 
 
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim', { 'name': 'dracula' }
+Plug 'phha/zenburn.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -34,6 +34,13 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'eandrju/cellular-automaton.nvim'
 
+" Status line
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'rebelot/kanagawa.nvim'
+
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
@@ -41,12 +48,15 @@ call plug#end()
 "   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
 
-colorscheme dracula
+colorscheme kanagawa-wave
+
 highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 set cursorline
 
 lua require("lsp_config")
 lua require("treesitter")
+lua require("lualine_setup")
+lua require("nvimtree_setup")
 
 " autocmd BufWritePre *.go lua vim.lsp.buf.format()
 " autocmd BufWritePre *.go lua goimports(1000)
@@ -61,63 +71,6 @@ set expandtab
 set cindent
 
 set mouse=
-
-" Rename tabs to show tab number.
-" (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
-if exists("+showtabline")
-    function! MyTabLine()
-        let s = ''
-        let wn = ''
-        let t = tabpagenr()
-        let i = 1
-        while i <= tabpagenr('$')
-            let buflist = tabpagebuflist(i)
-
-            let winnr = tabpagewinnr(i)
-            let s .= '%' . i . 'T'
-            let s .= (i == t ? '%1*' : '%2*')
-            let wn = tabpagewinnr(i,'$')
-
-            let s .= '%#TabNum#'
-            let s .= i
-            " Add '+' if one of the buffers in the tab page is modified
-            for bufnr in buflist
-              if getbufvar(bufnr, "&modified")
-                let s .= '+'
-                break
-              endif
-            endfor
-
-            " let s .= '%*'
-            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-            let bufnr = buflist[winnr - 1]
-            let file = bufname(bufnr)
-            let buftype = getbufvar(bufnr, 'buftype')
-            if buftype == 'nofile'
-                if file =~ '\/.'
-                    let file = substitute(file, '.*\/\ze.', '', '')
-                endif
-            else
-                let file = fnamemodify(file, ':p:t')
-            endif
-            
-            if file == ''
-                let file = '[No Name]'
-            endif
-
-            let s .= ' ' . file . ' '
-            let i = i + 1
-            
-        endwhile
-        let s .= '%T%#TabLineFill#%='
-        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-        return s
-    endfunction
-    set stal=2
-    set tabline=%!MyTabLine()
-    set showtabline=1
-    highlight link TabNum Identifier
-endif
 
 tnoremap <esc> <C-\><C-N>
 noremap <silent> <esc> :noh<cr><esc>
