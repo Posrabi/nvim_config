@@ -4,6 +4,7 @@ require("lualine").setup{
      {
       'tabs',
       mode = 2,
+      max_length = vim.o.columns,
       use_mode_colors = true,
       fmt = function(name, context)
         -- Show + if buffer is modified in tab
