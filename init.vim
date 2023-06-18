@@ -39,7 +39,9 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 
 Plug 'nvim-tree/nvim-tree.lua'
+
 Plug 'rebelot/kanagawa.nvim'
+Plug 'morhetz/gruvbox'
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -48,15 +50,17 @@ call plug#end()
 "   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
 
-colorscheme kanagawa-wave
-
-highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-set cursorline
+colorscheme gruvbox
 
 lua require("lsp_config")
 lua require("treesitter")
 lua require("lualine_setup")
 lua require("nvimtree_setup")
+
+highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+set cursorline
+
+highlight NvimTreeNormalFloat guibg=NONE guifg=NONE
 
 " autocmd BufWritePre *.go lua vim.lsp.buf.format()
 " autocmd BufWritePre *.go lua goimports(1000)
