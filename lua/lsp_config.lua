@@ -36,6 +36,18 @@ local on_attach = function(client, bufnr)
   else
     vim.keymap.set("n", "<space>f", function() vim.lsp.buf.format { async = true } end, bufopts)
   end
+
+  -- vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
+  -- vim.api.nvim_create_autocmd("InsertEnter", {
+  --   buffer = bufnr,
+  --   callback = function() vim.lsp.buf.inlay_hint(bufnr, true) end,
+  --   group = "lsp_augroup",
+  -- })
+  -- vim.api.nvim_create_autocmd("InsertLeave", {
+  --   buffer = bufnr,
+  --   callback = function() vim.lsp.buf.inlay_hint(bufnr, false) end,
+  --   group = "lsp_augroup",
+  -- })
 end
 
 require("neodev").setup()
@@ -59,7 +71,20 @@ nvim_lsp.gopls.setup{
 		      analyses = {
 		        unusedparams = true,
 		        shadow = true,
-		     },
+            fieldAlignment = true,
+            nilness = true,
+            useany = true,
+            unusedwrite = true,
+          },
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+		      },
 		     staticcheck = true,
 		    },
 	    },
