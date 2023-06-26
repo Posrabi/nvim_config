@@ -29,6 +29,7 @@ Plug 'dracula/vim', { 'name': 'dracula' }
 Plug 'phha/zenburn.nvim'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 
 " treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -59,7 +60,15 @@ Plug 'folke/neodev.nvim'
 
 call plug#end()
 
-colorscheme gruvbox
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+
+" For better performance
+let g:gruvbox_material_better_performance = 1
+
+colorscheme gruvbox-material
 
 lua require("lsp_config")
 lua require("treesitter")
@@ -77,7 +86,7 @@ highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 set cursorline
 
 " NvimTree float bg has the same color, similar to default telescope
-highlight NvimTreeNormalFloat guibg=NONE guifg=NONE
+" highlight NvimTreeNormalFloat guibg=NONE guifg=NONE
 
 " autocmd BufWritePre *.go lua vim.lsp.buf.format()
 " autocmd BufWritePre *.go lua goimports(1000)

@@ -19,6 +19,6 @@ require("lualine").setup{
     }
   },
   options = {
-      theme = "zenburn",
+      theme = "gruvbox-material",
   }
 }
