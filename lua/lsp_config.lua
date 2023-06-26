@@ -10,7 +10,6 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-   
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
@@ -18,8 +17,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', 'gc', vim.lsp.buf.incoming_calls, bufopts)
-  vim.keymap.set('n', 'gn', vim.diagnostic.goto_next, bufopts)
-  vim.keymap.set('n', 'gp', vim.diagnostic.goto_prev, bufopts)
+  vim.keymap.set('n', 'gn', vim.diagnostic.get_next, bufopts)
+  vim.keymap.set('n', 'gp', vim.diagnostic.get_prev, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -29,7 +28,6 @@ local on_attach = function(client, bufnr)
   end, bufopts)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  
   -- Set some keybinds conditional on server capabilities
   if client.server_capabilities.document_formatting then
     vim.keymap.set("n", "<space>f", function() vim.lsp.buf.document_formatting { async = true } end, bufopts)
@@ -38,27 +36,18 @@ local on_attach = function(client, bufnr)
   else
     vim.keymap.set("n", "<space>f", function() vim.lsp.buf.format { async = true } end, bufopts)
   end
-
-  -- Set autocommands conditional on server_capabilities
-  if client.server_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
 end
+
+require("neodev").setup()
 
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.pyright.setup{
   on_attach = on_attach,
 }
+
+nvim_lsp.lua_ls.setup({
+})
 
 nvim_lsp.gopls.setup{
 	cmd = {'gopls'},
@@ -76,36 +65,6 @@ nvim_lsp.gopls.setup{
 	    },
 	on_attach = on_attach,
 }
-
-  function goimports(timeoutms)
-    local context = { source = { organizeImports = true } }
-    vim.validate { context = { context, "t", true } }
-
-    local params = vim.lsp.util.make_range_params()
-    params.context = context
-
-    -- See the implementation of the textDocument/codeAction callback
-    -- (lua/vim/lsp/handler.lua) for how to do this properly.
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
-    if not result or next(result) == nil then return end
-    local actions = result[1].result
-    if not actions then return end
-    local action = actions[1]
-
-    -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
-    -- is a CodeAction, it can have either an edit, a command or both. Edits
-    -- should be executed first.
-    if action.edit or type(action.command) == "table" then
-      if action.edit then
-        vim.lsp.util.apply_workspace_edit(action.edit)
-      end
-      if type(action.command) == "table" then
-        vim.lsp.buf.execute_command(action.command)
-      end
-    else
-      vim.lsp.buf.execute_command(action)
-    end
-  end
 
 local has_words_before = function()
   unpack = unpack or table.unpack
@@ -156,7 +115,6 @@ end
           feedkey("<Plug>(vsnip-jump-prev)", "")
         end
       end, { "i", "s" })
-      
       }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },

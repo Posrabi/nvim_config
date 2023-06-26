@@ -35,7 +35,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " git
@@ -53,6 +53,9 @@ Plug 'nvim-tree/nvim-web-devicons'
 
 " oil
 Plug 'stevearc/oil.nvim'
+
+" vim api lsp
+Plug 'folke/neodev.nvim'
 
 call plug#end()
 
