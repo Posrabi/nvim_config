@@ -56,7 +56,9 @@ end
 
 local nvim_lsp = require('lspconfig')
 
-nvim_lsp.pyright.setup{}
+nvim_lsp.pyright.setup{
+  on_attach = on_attach,
+}
 
 nvim_lsp.gopls.setup{
 	cmd = {'gopls'},

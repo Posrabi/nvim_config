@@ -49,7 +49,10 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 
 " tree explorer
-Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-tree/nvim-tree.lua'
+
+" oil
+Plug 'stevearc/oil.nvim'
 
 call plug#end()
 
@@ -58,8 +61,13 @@ colorscheme gruvbox
 lua require("lsp_config")
 lua require("treesitter")
 lua require("lualine_setup")
-lua require("nvimtree_setup")
+" lua require("nvimtree_setup")
 lua require("telescope_setup")
+
+" embed, put default configs here
+lua <<EOF
+require("oil").setup()
+EOF
 
 " line number highlight
 highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
