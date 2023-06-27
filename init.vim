@@ -33,6 +33,7 @@ Plug 'sainnhe/gruvbox-material'
 
 " treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -58,6 +59,9 @@ Plug 'stevearc/oil.nvim'
 " vim api lsp
 Plug 'folke/neodev.nvim'
 
+" surround
+Plug 'kylechui/nvim-surround'
+
 call plug#end()
 
 " Important!!
@@ -79,6 +83,7 @@ lua require("telescope_setup")
 " embed, put default configs here
 lua <<EOF
 require("oil").setup()
+require("nvim-surround").setup()
 EOF
 
 " line number highlight
