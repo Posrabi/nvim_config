@@ -23,6 +23,7 @@ Plug 'hrsh7th/vim-vsnip'
 
 " lsp
 Plug 'neovim/nvim-lspconfig' 
+Plug 'ziglang/zig.vim'
 
 " themes
 Plug 'dracula/vim', { 'name': 'dracula' }
@@ -71,6 +72,9 @@ endif
 
 " For better performance
 let g:gruvbox_material_better_performance = 1
+
+" Disabling zig fmt on save
+let g:zig_fmt_autosave = 0
 
 colorscheme gruvbox-material
 
