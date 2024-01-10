@@ -6,4 +6,4 @@
 - Open nvim and :PlugInstall
 - Restart nvim
 - Set true color in term (skip if the color is already right)
-- Install LSPs: pyright, biome, lua_ls, tsserver, gopls, zls, clangd, copilot
+- Install LSPs: pyright, biome, lua_ls, tsserver, gopls, zls, clangd
