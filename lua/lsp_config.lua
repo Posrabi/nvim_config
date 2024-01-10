@@ -62,6 +62,14 @@ nvim_lsp.pyright.setup{
 nvim_lsp.lua_ls.setup({
 })
 
+nvim_lsp.biome.setup{
+  on_attach = on_attach,
+}
+
+nvim_lsp.tsserver.setup{
+  on_attach = on_attach,
+}
+
 nvim_lsp.gopls.setup{
 	cmd = {'gopls'},
 	-- for postfix snippets and analyzers
@@ -188,4 +196,19 @@ end
 nvim_lsp.clangd.setup{
   on_attach = on_attach,
   capabilities = require('cmp_nvim_lsp').default_capabilities()
+}
+
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.g.copilot_filetypes = {
+  ["*"] = false,
+  ["javascript"] = true,
+  ["typescript"] = true,
+  ["lua"] = false,
+  ["rust"] = true,
+  ["c"] = true,
+  ["c#"] = true,
+  ["c++"] = true,
+  ["go"] = true,
+  ["python"] = true,
 }
