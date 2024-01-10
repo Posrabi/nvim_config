@@ -63,6 +63,9 @@ Plug 'folke/neodev.nvim'
 " surround
 Plug 'kylechui/nvim-surround'
 
+" copilot
+Plug 'github/copilot.vim'
+
 call plug#end()
 
 " Important!!
