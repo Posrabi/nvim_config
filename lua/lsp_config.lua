@@ -67,7 +67,7 @@ nvim_lsp.biome.setup {
   on_attach = on_attach,
 }
 
-nvim_lsp.tsserver.setup {
+nvim_lsp.ts_ls.setup {
   on_attach = on_attach,
 }
 
@@ -205,6 +205,11 @@ nvim_lsp.rust_analyzer.setup {
 
 nvim_lsp.bashls.setup {
   on_attach = on_attach,
+}
+
+nvim_lsp.jdtls.setup {
+  on_attach = on_attach,
+  cmd = { '/home/tridao/jdt/bin/jdtls', "-configuration", "/home/tridao/jdt/config_linux"}
 }
 
 vim.g.copilot_no_tab_map = true
